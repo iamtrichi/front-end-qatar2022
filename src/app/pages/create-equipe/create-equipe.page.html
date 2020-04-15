@@ -1,0 +1,126 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ operation }} equipe</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+      <ion-button (click)="done()">
+        <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+      <input type="file" id="file" (change)="handleFileInput($event.target.files)" style="width:100%;position: absolute;height: 150px;cursor:pointer;opacity:0;z-index: 55;" class="in" />
+      
+      <ion-thumbnail style="width: 100%;height: 8em;text-align: center;">
+        <ion-img style="width: 8em;
+        height: 8em;
+        margin-top: 0px;
+        margin-left: auto;
+        margin-right: auto;" *ngIf="item.urlLogo" [src]="item.urlLogo" (ionError)="item.urlLogo = 'http://localhost:8090/upload/404.png'"></ion-img>
+        <ion-icon style="width: 8em;
+        height: 8em;
+        margin-top: 0px;
+        margin-left: auto;
+        margin-right: auto;" name="person" *ngIf="!item.urlLogo" ></ion-icon>
+      </ion-thumbnail>
+      <ion-item>
+        <ion-label>Nom</ion-label>
+        <ion-input clearInput placeholder="Nom" [(ngModel)]="item.nomEquipe"></ion-input>
+      </ion-item>
+      <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" >
+        <ion-segment-button value="players">
+          <ion-label>Joueurs</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="others">
+          <ion-label>Autre Joueurs</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <ion-list *ngIf="segment == 'players'">
+        <ion-list-header>
+          <ion-searchbar class="acard" (ionInput)="getItems($event, 'mine')"></ion-searchbar>
+        </ion-list-header>
+        <ion-item *ngFor="let j of itemsss" >
+          <ion-thumbnail slot="start">
+            <img [src]="j.urlImage">
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{j.nom}} {{j.prenom}}</h2>
+            <h3>Poste: <ion-badge color="secondary">{{j.poste}}</ion-badge> </h3>
+            <h3>Age: <ion-badge item-end>{{ getAge(j.dateNaissance) }}</ion-badge> ans</h3>
+          </ion-label>
+          <ion-button color="danger" (click)="retirer(j)">
+            <ion-icon name="close"></ion-icon>
+            Retirer
+          </ion-button>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="segment == 'others'">
+        <ion-list-header>
+          <ion-searchbar class="acard" (ionInput)="getItems($event)"></ion-searchbar>
+        </ion-list-header>
+        <ion-item *ngFor="let j of itemss" >
+          <ion-thumbnail item-start >
+            <img [src]="j.urlImage">
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{j.nom}} {{j.prenom}}</h2>
+            <h3>Poste: <ion-badge color="secondary">{{j.poste}}</ion-badge> </h3>
+            <h3>Age: <ion-badge item-end>{{ getAge(j.dateNaissance) }}</ion-badge> ans</h3>
+          </ion-label>
+          <ion-button color="secondary" (click)="ajouter(j)" item-end>
+            <ion-icon name="add-outline"></ion-icon>
+            Ajouter
+          </ion-button>
+        </ion-item>
+      </ion-list>
+
+
+      <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment1" >
+        <ion-segment-button value="staffs">
+          <ion-label>Staff</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="others">
+          <ion-label>Autre personnels</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <ion-list *ngIf="segment1 == 'staffs'">
+        <ion-list-header>
+          <ion-searchbar class="acard" (ionInput)="getItemss($event, 'mine')"></ion-searchbar>
+        </ion-list-header>
+        <ion-item *ngFor="let j of itemssstaffs" >
+          <ion-label>
+            <h2>{{j.nom}} {{j.prenom}}</h2>
+            <h3>Role: <ion-badge color="secondary">{{j.role}}</ion-badge> </h3>
+            <h3>Age: <ion-badge item-end>{{ getAge(j.dateNaissance) }}</ion-badge> ans</h3>
+          </ion-label>
+          <ion-button color="danger" (click)="retirerS(j)">
+            <ion-icon name="close"></ion-icon>
+            Retirer
+          </ion-button>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="segment1 == 'others'">
+        <ion-list-header>
+          <ion-searchbar class="acard" (ionInput)="getItemss($event)"></ion-searchbar>
+        </ion-list-header>
+        <ion-item *ngFor="let j of itemssS" >
+          <ion-label>
+            <h2>{{j.nom}} {{j.prenom}}</h2>
+            <h3>Poste: <ion-badge color="secondary">{{j.role}}</ion-badge> </h3>
+            <h3>Age: <ion-badge item-end>{{ getAge(j.dateNaissance) }}</ion-badge> ans</h3>
+          </ion-label>
+          <ion-button color="secondary" (click)="ajouterS(j)" item-end>
+            <ion-icon name="add-outline"></ion-icon>
+            Ajouter
+          </ion-button>
+        </ion-item>
+      </ion-list>
+</ion-content>

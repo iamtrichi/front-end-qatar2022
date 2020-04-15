@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Stades</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab (click)="addStade()" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button ion-fab color="primary"><ion-icon  name="add"></ion-icon></ion-fab-button>
+  </ion-fab>
+  <ion-searchbar *ngIf="!loading" class="acard" (ionInput)="getItems($event)"></ion-searchbar>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12" size-md="6" *ngFor="let stade of items">
+        <ion-card class="speaker-card">
+          <img [src]="stade.urlImage" [alt]="stade.nom + ' picture'">
+          <!-- <ion-icon color="primary" name="create-outline" style="position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 20;
+            font-size: xx-large;" (click)="editStade(stade)"></ion-icon> -->
+          <div class="card-title">{{ stade.nom }}</div>
+          <div class="card-subtitle1">{{ stade.nbrSpectateursMax }} place</div>
+          <div class="card-subtitle2"><ion-icon name="location"></ion-icon>{{ stade.adresse }}</div>
+          <ion-card-content>
+            <ion-item>
+              <ion-button (click)="editStade(stade)" slot="start"  expand="full" color="warning" fill="outline">
+                <ion-icon name="create" ></ion-icon> Modifier
+              </ion-button>
+              <ion-button (click)="deleteStade(stade)" slot="end"  expand="full" color="danger" fill="outline">
+                <ion-icon name="close" ></ion-icon> Supprimer
+              </ion-button>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

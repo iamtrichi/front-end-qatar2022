@@ -1,0 +1,69 @@
+<ion-content class="speaker-detail">
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/app/tabs/{{type}}"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+<div *ngIf="type == 'equipe'">
+  <div class="speaker-background" [ngStyle]="{'background':'center / cover url('+item?.urlLogo+') no-repeat'}">
+    
+  </div>
+
+  <div class="ion-padding speaker-detail">
+    <h2 style="text-align: center;">{{item?.nomEquipe}}</h2>
+    <hr>
+    <ion-list>
+      <ion-list-header>
+        Joueurs: {{ item?.joueurs.length }}
+      </ion-list-header>
+      <ion-item *ngFor="let j of item?.joueurs" >
+        <ion-thumbnail slot="start">
+          <img [src]="j.urlImage">
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{j.nom}} {{j.prenom}}</h2>
+          <h3>Poste: <ion-badge color="secondary">{{j.poste}}</ion-badge> </h3>
+          <h3>Age: <ion-badge item-end>{{ getAge(j.dateNaissance) }}</ion-badge> ans</h3>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+    <ion-list>
+      <ion-list-header>
+        Staff: {{ item?.staffs.length }}
+      </ion-list-header>
+      <ion-item *ngFor="let j of item?.staffs" >
+        <ion-label>
+          <h2>{{j.nom}} {{j.prenom}}</h2>
+          <h3>Poste: <ion-badge color="secondary">{{j.poste}}</ion-badge> </h3>
+          <h3>Age: <ion-badge item-end>{{ getAge(j.dateNaissance) }}</ion-badge> ans</h3>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+  </div>
+</div>
+
+
+<div *ngIf="type == 'joueur'">
+  <div class="speaker-background" [ngStyle]="{'background':'center / cover url('+item?.urlImage+') no-repeat'}">
+    
+  </div>
+
+  <div class="ion-padding speaker-detail">
+    <h2 style="text-align: center;">{{item?.nom}} {{item?.prenom}}</h2>
+
+    <hr>
+
+    <ion-chip color="{{ item?.poste }}" >
+      <ion-label>{{item?.poste}}</ion-label>
+    </ion-chip>
+    <ion-chip color="instagram" >
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>{{ getAge(item?.dateNaissance) }}</ion-label>
+    </ion-chip>
+  </div>
+</div>
+</ion-content>

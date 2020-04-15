@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ operation }} match</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+      <ion-button (click)="done()">
+        <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-item>
+    <ion-label>Stade: </ion-label>
+    <ion-select [(ngModel)]="item.stade" interface="popover" [compareWith]="compareWithFn">
+      <ion-select-option *ngFor="let stade of stades">{{stade.nom + ' ' + stade.adresse}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label>Date: </ion-label>
+    <ion-datetime [(ngModel)]="item.date" displayFormat="YYYY-MM-DD HH:mm" display-timezone="utc"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>Equipe A</ion-label>
+    <ion-select [(ngModel)]="item.equipeA" [compareWith]="compareWithFn">
+      <ion-select-option *ngFor="let equipe of equipes" [value]="equipe">{{ equipe.nomEquipe }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Equipe B</ion-label>
+    <ion-select [(ngModel)]="item.equipeB" [compareWith]="compareWithFn">
+      <ion-select-option *ngFor="let equipe of equipes" [value]="equipe">{{ equipe.nomEquipe }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item *ngIf="item.equipeA && item.equipeB">
+    <ion-label>Score:</ion-label>
+    <ion-input clearInput type="number" placeholder="{{ item.equipeA.nomEquipe }}" [(ngModel)]="item.scoreA"></ion-input> - 
+    <ion-input clearInput placeholder="{{ item.equipeB.nomEquipe }}" [(ngModel)]="item.scoreB"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Nombre de spectateurs:</ion-label>
+    <ion-input clearInput placeholder="Nombre de spectateurs" [(ngModel)]="item.nbrSpectateurs"></ion-input>
+  </ion-item>
+
+  <!-- <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" >
+    <ion-segment-button value="players">
+      <ion-label>Arbitres</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="others">
+      <ion-label>Autre Arbitres</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-list *ngIf="segment == 'players'">
+    <ion-item *ngFor="let j of item.arbitres" >
+      <ion-label>
+        <h2>{{j.nom}} {{j.prenom}}</h2>
+        <h3>Poste: <ion-badge color="secondary">{{j.poste}}</ion-badge> </h3>
+        <h3>Age: <ion-badge item-end>{{ getAge(j.dateNaissance) }}</ion-badge> ans</h3>
+      </ion-label>
+      <ion-button color="danger" (click)="retirer(j)">
+        <ion-icon name="close"></ion-icon>
+        Retirer
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="segment == 'others'">
+    <ion-list-header>
+      <ion-searchbar class="acard" (ionInput)="getItems($event)"></ion-searchbar>
+    </ion-list-header>
+    <ion-item *ngFor="let j of arbitresfiltred" >
+      <ion-label>
+        <h2>{{j.nom}} {{j.prenom}}</h2>
+        <h3>Poste: <ion-badge color="secondary">{{j.role}}</ion-badge> </h3>
+        <h3>Age: <ion-badge item-end>{{ getAge(j.dateNaissance) }}</ion-badge> ans</h3>
+      </ion-label>
+      <ion-button color="secondary" (click)="ajouter(j)" item-end>
+        <ion-icon name="add-outline"></ion-icon>
+        Ajouter
+      </ion-button>
+    </ion-item>
+  </ion-list> -->
+
+
+</ion-content>

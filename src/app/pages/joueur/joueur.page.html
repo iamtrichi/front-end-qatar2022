@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Joueurs
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg"  [fullscreen]="true">
+  <ion-fab (click)="addJoueur()" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button ion-fab color="primary"><ion-icon  name="add"></ion-icon></ion-fab-button>
+  </ion-fab>
+  <ion-searchbar *ngIf="!loading" class="acard" (ionInput)="getItems($event)"></ion-searchbar>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
+
+
+  <div *ngIf="!loading" class="acard">
+      <ion-list>  
+        <ion-item-sliding *ngFor="let item of items" >
+          <ion-item routerLink="/app/tabs/joueur/detail-equipe-joueur/{{item.id}}" >
+            <ion-thumbnail slot="start">
+              <img [src]="item.urlImage">
+            </ion-thumbnail>
+            <ion-label>
+              <h2>{{item.nom}} {{item.prenom}}</h2>
+              <h3>Poste: <ion-badge color="secondary">{{item.poste}}</ion-badge> </h3>
+              <h3>Age: <ion-badge item-end>{{ getAge(item.dateNaissance) }}</ion-badge> ans</h3>
+            </ion-label>
+          </ion-item>
+          <ion-item-options>
+            <ion-item-option color="favorite" (click)="editJoueur(item)" >
+              Modifier
+            </ion-item-option>
+            <ion-item-option color="danger" (click)="deleteJoueur(item)">
+              Supprimer
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+  </div>
+
+
+
+  <div class="acard" *ngIf="loading">
+      <ion-list>
+        <ion-item *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+          <ion-thumbnail slot="start">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+        
+      </ion-list>
+    </div>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

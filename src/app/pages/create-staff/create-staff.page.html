@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ operation }} staff</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+      <ion-button (click)="done()">
+        <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+      <br>
+      <br>
+      <ion-item>
+        <ion-label>Nom</ion-label>
+        <ion-input clearInput placeholder="Nom" [(ngModel)]="item.nom"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Prénom</ion-label>
+        <ion-input clearInput placeholder="Prenom" [(ngModel)]="item.prenom"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Poste</ion-label>
+        <ion-input clearInput placeholder="Poste" [(ngModel)]="item.role"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-item>
+          <ion-label>Date de naissance</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="item.dateNaissance"></ion-datetime>
+        </ion-item>
+      </ion-item>
+</ion-content>

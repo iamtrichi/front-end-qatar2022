@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ operation }} joueur</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+      <ion-button (click)="done()">
+        <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+      <input type="file" id="file" (change)="handleFileInput($event.target.files)" style="position: absolute;height: 150px;cursor:pointer;opacity:0" class="in" />
+      
+      <ion-thumbnail style="width: 100%;height: 8em;text-align: center;">
+        <ion-img style="width: 8em;
+        height: 8em;
+        margin-top: 0px;
+        margin-left: auto;
+        margin-right: auto;" *ngIf="item.urlImage" [src]="item.urlImage" (ionError)="item.urlImage = 'http://localhost:8090/upload/404.png'"></ion-img>
+        <ion-icon style="width: 8em;
+        height: 8em;
+        margin-top: 0px;
+        margin-left: auto;
+        margin-right: auto;" name="person" *ngIf="!item.urlImage" ></ion-icon>
+      </ion-thumbnail>
+      <ion-item>
+        <ion-label>Nom</ion-label>
+        <ion-input clearInput placeholder="Nom" [(ngModel)]="item.nom"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Prénom</ion-label>
+        <ion-input clearInput placeholder="Prenom" [(ngModel)]="item.prenom"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Poste</ion-label>
+        <ion-input clearInput placeholder="Poste" [(ngModel)]="item.poste"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-item>
+          <ion-label>Date de naissance</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="item.dateNaissance"></ion-datetime>
+        </ion-item>
+      </ion-item>
+</ion-content>
