@@ -55,6 +55,7 @@ export class AppComponent implements OnInit {
     private toastCtrl: ToastController,
   ) {
     this.initializeApp();
+    this.menu.enable(false);
   }
 
   async ngOnInit() {
@@ -119,11 +120,5 @@ export class AppComponent implements OnInit {
     this.userData.logout().then(() => {
       return this.router.navigateByUrl('/app/tabs/matche');
     });
-  }
-
-  openTutorial() {
-    this.menu.enable(false);
-    this.storage.set('ion_did_tutorial', false);
-    this.router.navigateByUrl('/tutorial');
   }
 }
