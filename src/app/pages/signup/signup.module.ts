@@ -11,10 +11,11 @@ import { SignupPageRoutingModule } from './signup-routing.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    SignupPageRoutingModule
+    SignupPageRoutingModule , 
   ],
   declarations: [
     SignupPage,
+  ],providers:[    Storage
   ]
 })
 export class SignUpModule { }

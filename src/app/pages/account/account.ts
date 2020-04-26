@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AlertController } from '@ionic/angular';
@@ -11,18 +11,27 @@ import { UserData } from '../../providers/user-data';
   templateUrl: 'account.html',
   styleUrls: ['./account.scss'],
 })
-export class AccountPage implements AfterViewInit {
+export class AccountPage implements OnInit {
   username: string;
-
+  user : any ; 
   constructor(
     public alertCtrl: AlertController,
     public router: Router,
     public userData: UserData
-  ) { }
-
-  ngAfterViewInit() {
-    this.getUsername();
-  }
+  ) {
+   
+   }
+   ngOnInit(){
+     this.userData.getCurrentUser().subscribe(data=>{
+       this.user=data ; 
+       console.log(data)
+     },err =>{
+      console.log(err)
+     })
+   }
+  // ngAfterViewInit() {
+  //   this.getUsername();
+  // }
 
   updatePicture() {
     console.log('Clicked to update picture');

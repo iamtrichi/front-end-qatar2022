@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { CrudService } from '../../crud.service';
 import { IonInfiniteScroll, ModalController, LoadingController, ToastController, PopoverController } from '@ionic/angular';
@@ -11,7 +11,7 @@ import { PopoverPage } from '../about-popover/about-popover';
   templateUrl: 'equipe.page.html',
   styleUrls: ['equipe.page.scss']
 })
-export class EquipePage {
+export class EquipePage implements OnInit {
   selectedItem: any;
   icons: string[];
   equipes: Array<object>;
@@ -25,6 +25,9 @@ export class EquipePage {
               private popoverCtrl: PopoverController, public modalController: ModalController) {
     // If we navigated to this page, we will have an item available as a nav param
 
+  }
+  ngOnInit(){
+      this.doRefresh() ; 
   }
 
   getItems(ev: any) {
@@ -51,9 +54,9 @@ export class EquipePage {
   }
 
 
-  ionViewDidEnter() {
-    this.doRefresh();
-  }
+  // ionViewDidEnter() {
+  //   this.doRefresh();
+  // }
 
   doRefresh(event?) {
     console.log(event);
