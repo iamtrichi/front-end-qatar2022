@@ -65,6 +65,8 @@ export class MatchePage implements OnInit {
     }
     // Reset items back to all of the items
     this.crud.getAll('match').subscribe(items => {
+
+      console.log(items)
       // if the value is an empty string don't filter the items
       if (this.queryText && this.queryText.trim() !== '') {
         items = items.filter((item: any) => {

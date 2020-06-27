@@ -1,30 +1,57 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
+
+const   apiUrl: string = environment.apiUrl;
+const   domain: string = environment.domain;
+
+
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class CrudService {
+  headers = new HttpHeaders().set('Content-Type', 'application/json;');
+  httpOptions = {
+    headers: new HttpHeaders({
+    //'authorization':  'Bearer '+ localStorage.getItem('access_token') , 
+    //'Content-Type': '*' ,
+    'Content-Type': 'application/json;',
+  })
+  };
 
-    private link = 'http://localhost:8090/api/';
+    private link = apiUrl;
     constructor(public http: HttpClient) {
       console.log('Hello JoueurProvider Provider');
     }
-
-    public getAll(url): Observable<object[]> {
-        return this.http.get<object[]>(this.link  +  url  +  's');
+    public getAll(url): Observable<any[]> {
+        return this.http.get<any[]>(this.link  +  url  +  's', this.httpOptions);
     }
 
     public add(obj, url): Observable<{success: boolean}> {
-        return this.http.post<{success: boolean}>(this.link + url, obj);
+      const httpOptions = {
+        headers: new HttpHeaders({
+        'authorization':  'Bearer ' + localStorage.getItem('access_token') ,
+        'Content-Type': 'application/json;',
+      })
+      };
+      return this.http.post<{success: boolean}>(this.link +  url, obj, httpOptions);
     }
 
     public update(obj, url): Observable<object> {
-        return this.http.put<object>(this.link + url, obj);
+      const httpOptions = {
+        headers: new HttpHeaders({
+        'authorization':  'Bearer ' + localStorage.getItem('access_token') ,
+        'Content-Type': 'application/json;',
+      })
+      };
+      return this.http.put<object>(this.link + url, obj, httpOptions);
     }
 
     public getById(id: number, url): Observable<object> {
-        return this.http.get<object>(this.link + url + '/' + id);
+        return this.http.get<object>(this.link + url + '/' + id, this.httpOptions);
     }
 
     public delete(obj, url): Observable<boolean> {
@@ -32,6 +59,12 @@ export class CrudService {
         params: new HttpParams()
       };
 
+      const httpOptions = {
+        headers: new HttpHeaders({
+        'authorization':  'Bearer ' + localStorage.getItem('access_token') ,
+        'Content-Type': 'application/json;',
+      })
+      };
       // Support easy query params for GET requests
       if (obj) {
         reqOpts.params = new HttpParams();
@@ -43,20 +76,22 @@ export class CrudService {
           }
         }
       }
-      return this.http.delete<boolean>(this.link  +  url + '/' + obj.id);
+      return this.http.delete<boolean>(this.link  +   url + '/' + obj.id, httpOptions);
     }
 
 
     postFile(fileToUpload: File): Observable<string> {
-        const httpOptions = {
+      const httpOptions = {
           headers: new HttpHeaders({
-            'x-access-token': localStorage.getItem('accessToken') || '' })
-        };
-        const endpoint = 'http://localhost:8090/upload';
-        const formData: FormData = new FormData();
-        formData.append('file', fileToUpload);
-        console.log(fileToUpload);
-        console.log(formData);
-        return this.http.post<string>(endpoint, formData);
-      }
+          'authorization':  'Bearer ' + localStorage.getItem('access_token') ,
+          'Content-Type': 'application/json;',
+        })
+      };
+      const endpoint = 'http://localhost:8090/upload';
+      const formData: FormData = new FormData();
+      formData.append('file', fileToUpload);
+      console.log(fileToUpload);
+      console.log(formData);
+      return this.http.post<string>(endpoint, formData, httpOptions);
+    }
 }

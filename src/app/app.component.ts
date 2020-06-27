@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
     {
       title: 'Stades',
       url: '/app/tabs/stade',
-      icon: 'stadium'
+      icon: 'football'
     }
   ];
   loggedIn = false;
